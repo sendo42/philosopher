@@ -6,7 +6,7 @@
 
 typedef struct s_info
 {
-    int *fork;
+    int *forks;
     int *each_life;
     int time;
     int start_time;
@@ -17,7 +17,7 @@ typedef struct s_info
     int num_philo;
     int num_must_eat;
 
-    pthread_mutex_t *forks;
+    pthread_mutex_t *pfork;
     pthread_mutex_t print;
 } t_info;
 
@@ -25,8 +25,12 @@ typedef struct s_pman
 {
     pthread_t tid;
     int philo_id;
+    int rfork;
+    int lfork;
     t_info *info;
 } t_pman;
+// pfork[rfork]
+// pfork[lfork]
 
 //どうやって共有資源を作るのか？
 
@@ -37,4 +41,12 @@ long now_time(t_info *info);
 void wait_tid(t_pman *pmans, int num);
 
 //共有してるのはinfo
-//
+/*
+共有資源ができた
+右手と左手の両方が使えそうなら取る
+
+右手と左手に、共有資源で確保したforksの配列を与える
+
+取れるときに取る
+
+*/

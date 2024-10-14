@@ -2,18 +2,20 @@
 triple:          'arm64-apple-darwin'
 binary-path:     a.out
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _dining_algo, symObjAddr: 0x0, symBinAddr: 0x100002744, symSize: 0x1E0 }
-  - { offsetInCU: 0x3B, offset: 0x3B, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0x8A0, symBinAddr: 0x100003AC0, symSize: 0x0 }
-  - { offsetInCU: 0x66, offset: 0x66, size: 0x8, addend: 0x0, symName: _.str.1, symObjAddr: 0x900, symBinAddr: 0x100003B20, symSize: 0x0 }
-  - { offsetInCU: 0x251, offset: 0x251, size: 0x8, addend: 0x0, symName: _dining_algo, symObjAddr: 0x0, symBinAddr: 0x100002744, symSize: 0x1E0 }
-  - { offsetInCU: 0x287, offset: 0x287, size: 0x8, addend: 0x0, symName: _wait_tid, symObjAddr: 0x1E0, symBinAddr: 0x100002924, symSize: 0xB4 }
-  - { offsetInCU: 0x2C7, offset: 0x2C7, size: 0x8, addend: 0x0, symName: _start_pmans, symObjAddr: 0x294, symBinAddr: 0x1000029D8, symSize: 0x16C }
-  - { offsetInCU: 0x319, offset: 0x319, size: 0x8, addend: 0x0, symName: _pman_setrule, symObjAddr: 0x400, symBinAddr: 0x100002B44, symSize: 0x218 }
-  - { offsetInCU: 0x379, offset: 0x379, size: 0x8, addend: 0x0, symName: _pman_init, symObjAddr: 0x618, symBinAddr: 0x100002D5C, symSize: 0x18C }
-  - { offsetInCU: 0x3BD, offset: 0x3BD, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x7A4, symBinAddr: 0x100002EE8, symSize: 0x5C }
-  - { offsetInCU: 0x26, offset: 0x431, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002FDC, symSize: 0x3BC }
-  - { offsetInCU: 0x3B, offset: 0x446, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0xA00, symBinAddr: 0x100003B40, symSize: 0x0 }
-  - { offsetInCU: 0x5E, offset: 0x469, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002FDC, symSize: 0x3BC }
-  - { offsetInCU: 0x94, offset: 0x49F, size: 0x8, addend: 0x0, symName: _set_starttime, symObjAddr: 0x3BC, symBinAddr: 0x100003398, symSize: 0x2B0 }
-  - { offsetInCU: 0xCF, offset: 0x4DA, size: 0x8, addend: 0x0, symName: _now_time, symObjAddr: 0x66C, symBinAddr: 0x100003648, symSize: 0x2E0 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _p_eat, symObjAddr: 0x0, symBinAddr: 0x1000026C8, symSize: 0x10 }
+  - { offsetInCU: 0x3B, offset: 0x3B, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0x880, symBinAddr: 0x100003AC0, symSize: 0x0 }
+  - { offsetInCU: 0x240, offset: 0x240, size: 0x8, addend: 0x0, symName: _p_eat, symObjAddr: 0x0, symBinAddr: 0x1000026C8, symSize: 0x10 }
+  - { offsetInCU: 0x265, offset: 0x265, size: 0x8, addend: 0x0, symName: _p_think, symObjAddr: 0x10, symBinAddr: 0x1000026D8, symSize: 0x28 }
+  - { offsetInCU: 0x28A, offset: 0x28A, size: 0x8, addend: 0x0, symName: _p_sleep, symObjAddr: 0x38, symBinAddr: 0x100002700, symSize: 0xD0 }
+  - { offsetInCU: 0x2AF, offset: 0x2AF, size: 0x8, addend: 0x0, symName: _dining_algo, symObjAddr: 0x108, symBinAddr: 0x1000027D0, symSize: 0x1C }
+  - { offsetInCU: 0x2E5, offset: 0x2E5, size: 0x8, addend: 0x0, symName: _start_pmans, symObjAddr: 0x124, symBinAddr: 0x1000027EC, symSize: 0x2F0 }
+  - { offsetInCU: 0x337, offset: 0x337, size: 0x8, addend: 0x0, symName: _pman_setrule, symObjAddr: 0x414, symBinAddr: 0x100002ADC, symSize: 0x1E0 }
+  - { offsetInCU: 0x397, offset: 0x397, size: 0x8, addend: 0x0, symName: _pman_init, symObjAddr: 0x5F4, symBinAddr: 0x100002CBC, symSize: 0x18C }
+  - { offsetInCU: 0x3DB, offset: 0x3DB, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x780, symBinAddr: 0x100002E48, symSize: 0x5C }
+  - { offsetInCU: 0x26, offset: 0x44F, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002F3C, symSize: 0x3BC }
+  - { offsetInCU: 0x3B, offset: 0x464, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0xAA0, symBinAddr: 0x100003AE0, symSize: 0x0 }
+  - { offsetInCU: 0x5F, offset: 0x488, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002F3C, symSize: 0x3BC }
+  - { offsetInCU: 0x95, offset: 0x4BE, size: 0x8, addend: 0x0, symName: _set_starttime, symObjAddr: 0x3BC, symBinAddr: 0x1000032F8, symSize: 0x2B0 }
+  - { offsetInCU: 0xD0, offset: 0x4F9, size: 0x8, addend: 0x0, symName: _now_time, symObjAddr: 0x66C, symBinAddr: 0x1000035A8, symSize: 0x2E0 }
+  - { offsetInCU: 0x11A, offset: 0x543, size: 0x8, addend: 0x0, symName: _wait_tid, symObjAddr: 0x94C, symBinAddr: 0x100003888, symSize: 0xAC }
 ...

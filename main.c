@@ -1,17 +1,31 @@
 #include "philo.h"
 
 
+void p_eat(t_pman pman)
+{
+    
+}
+
+void p_think(t_pman pman)
+{
+    printf("pman %i is thinking\n",pman.philo_id);
+}
+
+void p_sleep(t_pman pman)
+{
+    usleep(pman.info->time_to_sleep);
+}
+
 void *dining_algo(void *args)
 {
     t_pman *pman;
 
     pman = (t_pman *)args;
     
-    pthread_mutex_lock(&pman->info->print);
-    printf("address for &pman->info.print [%p]\n", &pman->info->print);
-    printf("I am %i philo\n", pman->philo_id);
-    now_time(pman->info);
-    pthread_mutex_unlock(&pman->info->print);
+    while(1)
+    {
+        
+    }
     return NULL;
 }
 
@@ -25,6 +39,11 @@ t_pman *start_pmans(t_pman *pmans, char **av)
     while(i < num)
     {
         pmans[i].philo_id = i;
+        if(i == 0)
+            pmans[i].rfork = num - 1;
+        else
+            pmans[i].rfork = i - 1;
+        pmans[i].lfork = i;
         pthread_create(&pmans[i].tid, NULL, dining_algo, &pmans[i]);
         i++;
     }
@@ -43,13 +62,13 @@ t_pman *pman_setrule (char **av)
     num = atoi(av[1]);
     pmans = malloc(sizeof(t_pman) * num);
     info = malloc(sizeof(t_info));
-    info->forks = malloc(sizeof(pthread_mutex_t) * num);
+    info->pfork = malloc(sizeof(pthread_mutex_t) * num);
+    info->forks = malloc(sizeof(int) * num);
     info = store_rule(info, av);
     info = set_starttime(info);
     
     while (i < num)
     {
-        pmans[i].philo_id = i;
         pmans[i].info = info;
         i++;
     }
@@ -65,10 +84,9 @@ t_pman *pman_init(char **av)
 
     i = 0;
     pmans = pman_setrule(av);
-
     while(i < atoi(av[1]))
     {
-        pthread_mutex_init(&pmans->info->forks[i], NULL);
+        pthread_mutex_init(&pmans->info->pfork[i], NULL);
         i++;
     }
     pthread_mutex_init(&pmans->info->print, NULL);
@@ -92,3 +110,18 @@ int main(int ac, char **av)
     }
 }
 
+
+// void *dining_algo(void *args)
+// {
+//     t_pman *pman;
+
+//     pman = (t_pman *)args;
+    
+//     pthread_mutex_lock(&pman->info->print);
+//     printf("address for &pman->info.print [%p]\n", &pman->info->print);
+//     printf("I am %i philo, I have joycon r = %i[%p] l = %i[%p]\n", pman->philo_id, pman->rfork, &pman->rfork, pman->lfork, &pman->lfork);
+//     printf("pman->info->rfork%p\npman->info->lfork%p\n",&pman->info->forks[pman->rfork],&pman->info->forks[pman->lfork]);
+//     now_time(pman->info);
+//     pthread_mutex_unlock(&pman->info->print);
+//     return NULL;
+// }
