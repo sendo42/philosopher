@@ -1,0 +1,19 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     a.out
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _dining_algo, symObjAddr: 0x0, symBinAddr: 0x100002744, symSize: 0x1E0 }
+  - { offsetInCU: 0x3B, offset: 0x3B, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0x8A0, symBinAddr: 0x100003AC0, symSize: 0x0 }
+  - { offsetInCU: 0x66, offset: 0x66, size: 0x8, addend: 0x0, symName: _.str.1, symObjAddr: 0x900, symBinAddr: 0x100003B20, symSize: 0x0 }
+  - { offsetInCU: 0x251, offset: 0x251, size: 0x8, addend: 0x0, symName: _dining_algo, symObjAddr: 0x0, symBinAddr: 0x100002744, symSize: 0x1E0 }
+  - { offsetInCU: 0x287, offset: 0x287, size: 0x8, addend: 0x0, symName: _wait_tid, symObjAddr: 0x1E0, symBinAddr: 0x100002924, symSize: 0xB4 }
+  - { offsetInCU: 0x2C7, offset: 0x2C7, size: 0x8, addend: 0x0, symName: _start_pmans, symObjAddr: 0x294, symBinAddr: 0x1000029D8, symSize: 0x16C }
+  - { offsetInCU: 0x319, offset: 0x319, size: 0x8, addend: 0x0, symName: _pman_setrule, symObjAddr: 0x400, symBinAddr: 0x100002B44, symSize: 0x218 }
+  - { offsetInCU: 0x379, offset: 0x379, size: 0x8, addend: 0x0, symName: _pman_init, symObjAddr: 0x618, symBinAddr: 0x100002D5C, symSize: 0x18C }
+  - { offsetInCU: 0x3BD, offset: 0x3BD, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x7A4, symBinAddr: 0x100002EE8, symSize: 0x5C }
+  - { offsetInCU: 0x26, offset: 0x431, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002FDC, symSize: 0x3BC }
+  - { offsetInCU: 0x3B, offset: 0x446, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0xA00, symBinAddr: 0x100003B40, symSize: 0x0 }
+  - { offsetInCU: 0x5E, offset: 0x469, size: 0x8, addend: 0x0, symName: _store_rule, symObjAddr: 0x0, symBinAddr: 0x100002FDC, symSize: 0x3BC }
+  - { offsetInCU: 0x94, offset: 0x49F, size: 0x8, addend: 0x0, symName: _set_starttime, symObjAddr: 0x3BC, symBinAddr: 0x100003398, symSize: 0x2B0 }
+  - { offsetInCU: 0xCF, offset: 0x4DA, size: 0x8, addend: 0x0, symName: _now_time, symObjAddr: 0x66C, symBinAddr: 0x100003648, symSize: 0x2E0 }
+...
