@@ -17,6 +17,8 @@ long get_current_time()
 
     gettimeofday(&tv,NULL);
     time = tv.tv_usec / 1000 + tv.tv_sec * 1000;
+    //https://labo.utsubopeo.com/archives/915
+    //https://funini.com/kei/c/time.shtml m秒に変換
     return time;
 }
 

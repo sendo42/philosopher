@@ -2,14 +2,21 @@
 
 void take_fork(t_pman *pman)
 {
+    // printf("from last eat %li\n",get_current_time() - pman->last_eattime);
+    pman->last_eattime = get_current_time();
+    // printf("I am %i last_eattime = %li\n",pman->philo_id,pman->last_eattime);
     pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
         printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
     pthread_mutex_lock(&pman->info->pfork[pman->lfork]);
         printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
         printf("%li %i is eating\n",now_time(pman->info),pman->philo_id);
         ft_msleep(pman->info->time_to_eat);
+        pman->last_eattime = get_current_time();
     pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
     pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
+    pman->last_eattime = get_current_time();
+    // printf("I am %i  have eaten last_eattime = %li\n",pman->philo_id,pman->last_eattime);
+    // printf("I am %i last_eattime = %li\n",pman->philo_id,pman->last_eattime);
 
 }
 
@@ -25,13 +32,16 @@ void p_think(t_pman *pman)
 
 void    ft_msleep(long time)
 {
+    //現時点での時間に待ちたい秒数を加えてそこまで待つ。
+    //m秒単位に直す
     long    end_time;
 
     end_time = get_current_time() + time;
     while (end_time > get_current_time())
     {
-        usleep((end_time - get_current_time()) / 4 * 1000);
+        usleep(((end_time - get_current_time()) / 4) * 1000);
     }
+    
 }
 
 void p_sleep(t_pman *pman)
@@ -51,7 +61,7 @@ void *dining_algo(void *args)
     
     if(pman->info->num_philo % 2 == 0 && pman->philo_id % 2 == 0)
     {
-        usleep(500);
+        usleep(10);
     }
     while(1)
     {
@@ -78,9 +88,11 @@ t_pman *start_pmans(t_pman *pmans, char **av)
         else
             pmans[i].rfork = i - 1;
         pmans[i].lfork = i;
+        pmans[i].last_eattime = get_current_time();
         pthread_create(&pmans[i].tid, NULL, dining_algo, &pmans[i]);
         i++;
     }
+    observe(pmans,av);
     wait_tid(pmans, num);
     return pmans;
 }
@@ -110,7 +122,6 @@ t_pman *pman_setrule (char **av)
     return pmans;
 }
 
-//メモリを確保し、ルールを代入
 t_pman *pman_init(char **av)
 {
     t_pman *pmans;
@@ -159,3 +170,4 @@ int main(int ac, char **av)
 //     pthread_mutex_unlock(&pman->info->print);
 //     return NULL;
 // }
+
