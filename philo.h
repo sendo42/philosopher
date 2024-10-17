@@ -9,7 +9,7 @@ typedef struct s_info
     int *forks;
     int *each_life;
     int time;
-    int start_time;
+    long start_time;
 
     int time_to_die;
     int time_to_eat;
@@ -39,6 +39,8 @@ t_info *set_starttime(t_info *info);
 t_info *store_rule (t_info *info, char **av);
 long now_time(t_info *info);
 void wait_tid(t_pman *pmans, int num);
+long get_current_time();
+void    ft_msleep(long time);
 
 //共有してるのはinfo
 /*
@@ -47,6 +49,5 @@ void wait_tid(t_pman *pmans, int num);
 
 右手と左手に、共有資源で確保したforksの配列を与える
 
-取れるときに取る
 
 */

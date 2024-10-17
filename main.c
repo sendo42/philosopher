@@ -1,30 +1,64 @@
 #include "philo.h"
 
-
-void p_eat(t_pman pman)
+void take_fork(t_pman *pman)
 {
-    
+    pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
+        printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
+    pthread_mutex_lock(&pman->info->pfork[pman->lfork]);
+        printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
+        printf("%li %i is eating\n",now_time(pman->info),pman->philo_id);
+        ft_msleep(pman->info->time_to_eat);
+    pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+    pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
+
 }
 
-void p_think(t_pman pman)
-{
-    printf("pman %i is thinking\n",pman.philo_id);
+void p_eat(t_pman *pman)
+{   
+    take_fork(pman);
 }
 
-void p_sleep(t_pman pman)
+void p_think(t_pman *pman)
 {
-    usleep(pman.info->time_to_sleep);
+    printf("%li %i is thinking\n",now_time(pman->info),pman->philo_id);
+}
+
+void    ft_msleep(long time)
+{
+    long    end_time;
+
+    end_time = get_current_time() + time;
+    while (end_time > get_current_time())
+    {
+        usleep((end_time - get_current_time()) / 4 * 1000);
+    }
+}
+
+void p_sleep(t_pman *pman)
+{
+    printf("%li %i is sleeping\n",now_time(pman->info),pman->philo_id);
+    ft_msleep(pman->info->time_to_sleep);
+
 }
 
 void *dining_algo(void *args)
 {
     t_pman *pman;
+    int i;
 
+    i = 0;
     pman = (t_pman *)args;
     
+    if(pman->info->num_philo % 2 == 0 && pman->philo_id % 2 == 0)
+    {
+        usleep(500);
+    }
     while(1)
     {
-        
+        p_think(pman);
+        p_eat(pman);
+        p_sleep(pman);
+        i++;
     }
     return NULL;
 }

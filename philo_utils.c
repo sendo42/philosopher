@@ -10,24 +10,27 @@ t_info *store_rule (t_info *info, char **av)
     return info;
 }
 
-t_info *set_starttime(t_info *info)
+long get_current_time()
 {
+    long time;
     struct timeval tv;
 
     gettimeofday(&tv,NULL);
-    info->start_time = tv.tv_usec;
-    // printf("%i\n",info.start_time);
+    time = tv.tv_usec / 1000 + tv.tv_sec * 1000;
+    return time;
+}
+
+t_info *set_starttime(t_info *info)
+{
+    info->start_time = get_current_time();
     return info;
 }
 
 long now_time(t_info *info)
 {
-    struct timeval tv;
     long time;
 
-    gettimeofday(&tv,NULL);
-    time = tv.tv_usec - info->start_time;
-    printf("the time is %lims\n",time);
+    time = get_current_time() - info->start_time;
     return time;
 }
 
