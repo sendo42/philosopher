@@ -54,9 +54,7 @@ void p_sleep(t_pman *pman)
 void *dining_algo(void *args)
 {
     t_pman *pman;
-    int i;
 
-    i = 0;
     pman = (t_pman *)args;
     
     if(pman->info->num_philo % 2 == 0 && pman->philo_id % 2 == 0)
@@ -68,7 +66,6 @@ void *dining_algo(void *args)
         p_think(pman);
         p_eat(pman);
         p_sleep(pman);
-        i++;
     }
     return NULL;
 }

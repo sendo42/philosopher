@@ -26,10 +26,25 @@ void observe(t_pman *pmans, char **av);
 死んだ状態を全部に伝えてスレッドを終わらせたい
     スレッドを終わらせる
         どれかが死んだかを見てひとつでもあてはまれば
-            死んだら
+            死んだら全部にis_deadを1にする
+
+end_thread
+
+monitor_dead
+
+search_dead
+
+is_died
+
+set_dead
+
+
 
 
 */
+
+
+
 
 
 bool is_died(t_pman *pman)
@@ -40,6 +55,21 @@ bool is_died(t_pman *pman)
         return false;
 }
 
+bool search_dead(t_pman *pman)
+{
+    int i;
+    int death_flag;
+
+    i = 0;
+    death_flag = 0;
+    while(i < pman->info->num_philo)
+    {
+        death_flag = is_died(&pman[i]);
+        i++;
+    }
+    return death_flag;
+}
+
 void set_all_died(t_pman *pman)
 {
     int i;
@@ -47,8 +77,22 @@ void set_all_died(t_pman *pman)
     i = 0;
 
     while(i < pman->info->num_philo)
-    
+    {
+        pman->is_dead = 1;
+        i++;
+    }
 }
+
+void monitor_dead(t_pman *pman)
+{
+    while(1)
+    {
+        if(search_dead(pman))
+            set_all_died(pman);
+        break;
+    }
+}
+
 
 
 
