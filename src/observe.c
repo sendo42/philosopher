@@ -71,24 +71,44 @@ bool is_died(t_pman *pman)
 
 bool is_full_eat(t_pman *pman)
 {
-    if(pman->count_eat >= pman->info->num_must_eat)
+    // printf("pman->count_eat = %i must_eat = %i\n",pman->count_eat,pman->info->num_must_eat);
+    if(pman->count_eat >= pman->info->num_must_eat + 1)
         return true;
     else
         return false;
 }
 
+bool is_full_alleat(t_pman *pman)
+{
+    int i;
+
+    i = 0;
+    while(i < pman->info->num_philo)
+    {
+        pman[i].info->is_full = is_full_eat(&pman[i]);
+        printf("is_full %i\n",pman[i].info->is_full);
+        if(pman[i].info->is_full == true)
+        {
+            // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
+            // printf("now_time = %li\n", get_current_time());
+            // printf("time_to die %i, now time is %li\n",pman->info->time_to_die, get_current_time() - pman[i].last_eattime);
+            // printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
+            break ;
+        }
+        i++;
+    }
+    return true;    
+}
 
 bool is_anyone_dead(t_pman *pman)
 {
     int i;
-    int death_flag;
 
     i = 0;
-    death_flag = 0;
     while(i < pman->info->num_philo)
     {
-        death_flag = is_died(&pman[i]);
-        if(death_flag == true)
+        pman->info->is_dead = is_died(&pman[i]);
+        if(pman->info->is_dead == true)
         {
             // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
             // printf("now_time = %li\n", get_current_time());
@@ -98,20 +118,7 @@ bool is_anyone_dead(t_pman *pman)
         }
         i++;
     }
-    return death_flag;
-}
-
-void set_all_died(t_pman *pman)
-{
-    int i;
-
-    i = 0;
-
-    while(i < pman->info->num_philo)
-    {
-        pman[i].is_dead = true;
-        i++;
-    }
+    return pman->info->is_dead;
 }
 
 void monitor_end(t_pman *pman)
@@ -120,10 +127,9 @@ void monitor_end(t_pman *pman)
     {
         if(is_anyone_dead(pman) == true)
         {
-            set_all_died(pman);
             break;
         }
-        if(is_full_eat(pman) == true)
+        if(is_full_alleat(pman) == true)
         {
             break ;
         }
@@ -131,6 +137,19 @@ void monitor_end(t_pman *pman)
 }
 
 
+
+// void set_all_died(t_pman *pman)
+// {
+//     int i;
+
+//     i = 0;
+
+//     while(i < pman->info->num_philo)
+//     {
+//         pman[i].is_dead = true;
+//         i++;
+//     }
+// }
 
 
 // void observe(t_pman *pmans)

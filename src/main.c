@@ -1,42 +1,58 @@
 #include "philo.h"
 
-void take_rfork(t_pman *pman)
+void take_fork(t_pman *pman)
 {
     // printf("philo_id %i rfork %i lfork %i last eattime %li\n",pman->philo_id, pman->rfork,pman->lfork,get_current_time() - pman->last_eattime);
+    // pthread_mutex_lock(&pman->info->print);
     pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
-    printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
-
-    // pman->last_eattime = get_current_time();
-}
-void take_lfork(t_pman *pman)
-{
+    if(pman->info->is_dead == true)
+    {
+        // pthread_mutex_unlock(&pman->info->print);
+        pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+        return ;
+    }
+    else
+        printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
     pthread_mutex_lock(&pman->info->pfork[pman->lfork]);
-    printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
-}
-
-void handoff(pthread_mutex_t *pfork, int fork_id)
-{
-    pthread_mutex_unlock(&pfork[fork_id]);
+    pman->last_eattime = get_current_time();
+    if(pman->info->is_dead == true)
+    {
+        // pthread_mutex_unlock(&pman->info->print);
+        pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+        return ;
+    }
+    else
+    {
+        printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
+        printf("%li %i is eating\n",now_time(pman->info),pman->philo_id);
+    }
+    // pthread_mutex_unlock(&pman->info->print);
+    ft_msleep(pman->info->time_to_eat);
+    pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
+    pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+    pman->count_eat++;
+    // printf("count eat = %i\n",pman->count_eat);
 }
 
 void p_eat(t_pman *pman)
-{
-    pthread_mutex_lock(&pman->info->print);
-    take_rfork(pman);
-    take_lfork(pman);
-        pman->last_eattime = get_current_time();
-        printf("%li %i is eating\n",now_time(pman->info),pman->philo_id);
-    pthread_mutex_unlock(&pman->info->print);
-        pman->count_eat++;
-        ft_msleep(pman->info->time_to_eat);
-    handoff(pman->info->pfork, pman->rfork);
-    handoff(pman->info->pfork, pman->lfork);
+{   
+    take_fork(pman);
 }
 
 void p_think(t_pman *pman)
-{
-    
-    printf("%li %i is thinking\n",now_time(pman->info),pman->philo_id);
+{        
+    // printf("pm %i is_dead %i\n",pman->philo_id, pman->info->is_dead);
+    // if(pman->info->is_dead == false)
+    // {
+        // printf("bool %i %i\n",true ,false);
+        pthread_mutex_lock(&pman->info->print);
+        // pman->info->is_dead = true;
+        // printf("pm %i is_dead %i\n",pman->philo_id, pman->info->is_dead);
+        printf("%li %i is thinking\n",now_time(pman->info),pman->philo_id);
+        pthread_mutex_unlock(&pman->info->print);
+    // }
+    // else
+    //     return ;
 }
 
 void    ft_msleep(long time)
@@ -55,8 +71,12 @@ void    ft_msleep(long time)
 
 void p_sleep(t_pman *pman)
 {
-    if(pman->is_dead != true)
+    if(pman->info->is_dead == 0)
+    {
+        // pthread_mutex_lock(&pman->info->print);
         printf("%li %i is sleeping\n",now_time(pman->info),pman->philo_id);
+        // pthread_mutex_unlock(&pman->info->print);
+    }
     else
         return ;
     ft_msleep(pman->info->time_to_sleep);
@@ -78,13 +98,19 @@ void *dining_algo(void *args)
     while(1)
     {
         p_think(pman);
+        if(pman->info->is_dead == true || pman->info->is_full == true)
+            break;
         p_eat(pman);
-        if(is_died(pman) || pman->is_dead == true || is_full_eat(pman))
+        printf("pman is fulleat = %i\n",pman->info->is_full);
+        if(pman->info->is_dead == true || pman->info->is_full == true)
             break;
         p_sleep(pman);
         // printf("pman->is_dead%i\n",pman->is_dead);
-        if(is_died(pman) || pman->is_dead == true || is_full_eat(pman))
+        if(pman->info->is_dead == true || pman->info->is_full == true)
+        {
+            // printf("count eat = %i \n",pman->count_eat);
             break;
+        }
 
     }
     return NULL;
@@ -107,6 +133,7 @@ t_pman *start_pmans(t_pman *pmans, char **av)
         pmans[i].lfork = i;
         pmans[i].last_eattime = get_current_time();
         pmans[i].count_eat = 0;
+        pmans[i].is_fulleat = 0;
         pthread_create(&pmans[i].tid, NULL, dining_algo, &pmans[i]);
         i++;
     }

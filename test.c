@@ -1,4 +1,3 @@
-#include "philo.h"
 
 // long get_current_time()
 // {
@@ -32,14 +31,11 @@ if(pman->is_dead == true)
 
 */
 
-
 #include <stdio.h>
-#include <sys/time.h>
-int main(int argc, char **argv) {
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
-  printf("%ld %06d\n", tv.tv_sec, tv.tv_usec);
-  gettimeofday(&tv, NULL);
-  printf("%ld %06d\n", tv.tv_sec, tv.tv_usec);
-  return 0;
+#include <unistd.h>
+
+int main()
+{
+    printf("aiueo\n");
+    write(1,"aaaaa\n",6);
 }

@@ -14,6 +14,8 @@ typedef struct s_info
     int time_to_sleep;
     int num_philo;
     int num_must_eat;
+    bool is_dead;
+    bool is_full;
 
     pthread_mutex_t *pfork;
     pthread_mutex_t print;
@@ -28,8 +30,8 @@ typedef struct s_pman
     t_info *info;
     
     long last_eattime;
-    bool is_dead;
     int count_eat;
+    bool is_fulleat;
 } t_pman;
 
 // pfork[rfork]
