@@ -14,6 +14,7 @@ typedef struct s_info
     int time_to_sleep;
     int num_philo;
     int num_must_eat;
+
     bool is_dead;
     bool is_full;
 

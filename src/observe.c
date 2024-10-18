@@ -86,7 +86,8 @@ bool is_full_alleat(t_pman *pman)
     while(i < pman->info->num_philo)
     {
         pman[i].info->is_full = is_full_eat(&pman[i]);
-        printf("is_full %i\n",pman[i].info->is_full);
+        // printf("is_full %i\n",pman[i].info->is_full);
+        // printf("is_full %i\n",is_full_eat(&pman[i]));
         if(pman[i].info->is_full == true)
         {
             // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
@@ -129,8 +130,9 @@ void monitor_end(t_pman *pman)
         {
             break;
         }
-        if(is_full_alleat(pman) == true)
+        if(is_full_eat(pman) == true)
         {
+            pman->info->is_full = true;
             break ;
         }
     }

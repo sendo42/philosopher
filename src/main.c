@@ -101,7 +101,7 @@ void *dining_algo(void *args)
         if(pman->info->is_dead == true || pman->info->is_full == true)
             break;
         p_eat(pman);
-        printf("pman is fulleat = %i\n",pman->info->is_full);
+        // printf("pman is fulleat = %i\n",pman->info->is_full);
         if(pman->info->is_dead == true || pman->info->is_full == true)
             break;
         p_sleep(pman);
@@ -134,6 +134,8 @@ t_pman *start_pmans(t_pman *pmans, char **av)
         pmans[i].last_eattime = get_current_time();
         pmans[i].count_eat = 0;
         pmans[i].is_fulleat = 0;
+        if (i > 5)
+            return pmans;
         pthread_create(&pmans[i].tid, NULL, dining_algo, &pmans[i]);
         i++;
     }
