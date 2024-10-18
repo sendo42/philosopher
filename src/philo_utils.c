@@ -47,3 +47,13 @@ void wait_tid(t_pman *pmans, int num)
         i++;
     }
 }
+
+// void myprintf(t_info *info,int philo_id, bool is_dead, char *str)
+// {
+//     if(is_dead != true)
+//     {
+//         pthread_mutex_lock(&info->print);
+//             printf("%li %i %s",now_time(info),philo_id, str);
+//         pthread_mutex_unlock(&info->print);
+//     }
+// }//これはわかってないやつ、ちがうやろ

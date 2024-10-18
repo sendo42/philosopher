@@ -24,6 +24,15 @@
 // }
 
 
+/*
+終わらせるやつ作りたい
+break;
+if(pman->is_dead == true)
+    break;
+
+*/
+
+
 #include <stdio.h>
 #include <sys/time.h>
 int main(int argc, char **argv) {

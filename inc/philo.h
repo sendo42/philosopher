@@ -7,9 +7,6 @@
 
 typedef struct s_info
 {
-    int *forks;
-    int *each_life;
-    int time;
     long start_time;
 
     int time_to_die;
@@ -29,8 +26,10 @@ typedef struct s_pman
     int rfork;
     int lfork;
     t_info *info;
+    
     long last_eattime;
     bool is_dead;
+    int count_eat;
 } t_pman;
 
 // pfork[rfork]
@@ -45,8 +44,14 @@ long now_time(t_info *info);
 void wait_tid(t_pman *pmans, int num);
 long get_current_time();
 void    ft_msleep(long time);
-void observe(t_pman *pmans, char **av);
+void observe(t_pman *pmans);
 
+void monitor_end(t_pman *pman);
+
+bool is_full_eat(t_pman *pman);
+bool is_died(t_pman *pman);
+void *lonely_stop(t_pman *pman);
+void p_think(t_pman *pman);
 
 //共有してるのはinfo
 /*
@@ -68,6 +73,65 @@ void observe(t_pman *pmans, char **av);
 
 何回食べたかみたいなやつを全員分用意し、それが終わったら終了させるやつも必要
 
-
+なぜeatingやhas taken a forkがされないときがあるのか？
 
 */
+
+// void take_rfork(t_pman *pman)
+// {
+//     // printf("philo_id %i rfork %i lfork %i last eattime %li\n",pman->philo_id, pman->rfork,pman->lfork,get_current_time() - pman->last_eattime);
+//     pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
+//     pthread_mutex_lock(&pman->info->print);
+//     myprintf(pman->info,pman->philo_id, pman->is_dead, "has taken a fork\n");
+//     // pman->last_eattime = get_current_time();
+// }
+// void take_lfork(t_pman *pman)
+// {
+//     pthread_mutex_lock(&pman->info->pfork[pman->lfork]);
+//     myprintf(pman->info,pman->philo_id, pman->is_dead, "has taken a fork\n");
+//     pthread_mutex_unlock(&pman->info->print);
+// }
+
+// void handoff(pthread_mutex_t *pfork, int fork_id)
+// {
+//     pthread_mutex_unlock(&pfork[fork_id]);
+// }
+
+// void p_eat(t_pman *pman)
+// {   
+//     take_rfork(pman);
+//     take_lfork(pman);
+//         pman->last_eattime = get_current_time();
+//         myprintf(pman->info,pman->philo_id, pman->is_dead, "is eating\n");
+//         pman->count_eat++;
+//         ft_msleep(pman->info->time_to_eat);
+//     handoff(pman->info->pfork, pman->rfork);
+//     handoff(pman->info->pfork, pman->lfork);
+//     // pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+//     // pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
+// }
+
+// void take_fork(t_pman *pman)
+// {
+//     // printf("philo_id %i rfork %i lfork %i last eattime %li\n",pman->philo_id, pman->rfork,pman->lfork,get_current_time() - pman->last_eattime);
+//     pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
+//     myprintf(pman->info,pman->philo_id, pman->is_dead, "has taken a fork\n");
+//     pthread_mutex_lock(&pman->info->pfork[pman->lfork]);
+//     pman->last_eattime = get_current_time();
+//     myprintf(pman->info,pman->philo_id, pman->is_dead, "has taken a fork\n");
+//     myprintf(pman->info,pman->philo_id, pman->is_dead, "is eating\n");
+//     ft_msleep(pman->info->time_to_eat);
+//     // pman->last_eattime = get_current_time();
+//     pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
+//     pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
+//     pman->count_eat++;
+// }
+
+// void p_eat(t_pman *pman)
+// {   
+//     take_fork(pman);
+// }
+
+//いまさら理解したが、たんに囲めばいいというわけじゃない。
+//mutexは共有していて初めて意味をなす。
+//printのやつも、混線しないように、みんなでprintしていいかの変数の共有を行って、解放されたらだす
