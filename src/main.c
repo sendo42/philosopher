@@ -88,7 +88,7 @@ void *dining_algo(void *args)
     t_pman *pman;
 
     pman = (t_pman *)args;
-    if(pman->info->num_philo == 0)
+    if(pman->info->num_philo == 1)
         return lonely_stop(pman);
     if((pman->philo_id + 1) % 2 == 0)
     {
@@ -134,13 +134,11 @@ t_pman *start_pmans(t_pman *pmans, char **av)
         pmans[i].last_eattime = get_current_time();
         pmans[i].count_eat = 0;
         pmans[i].is_fulleat = 0;
-        if (i > 5)
-            return pmans;
         pthread_create(&pmans[i].tid, NULL, dining_algo, &pmans[i]);
         i++;
     }
     monitor_end(pmans);
-    wait_tid(pmans, num);
+    wait_tid(pmans);
     return pmans;
 }
 

@@ -49,7 +49,7 @@ void *lonely_stop(t_pman *pman)
     p_think(pman);
     printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
     ft_msleep(pman->info->time_to_die);
-
+    
     return NULL;
 }
 
@@ -135,6 +135,13 @@ void monitor_end(t_pman *pman)
             pman->info->is_full = true;
             break ;
         }
+        // printf("pman->info->is_dead %i\n",pman->info->is_dead);
+        if(pman->info->is_dead == true)
+        {
+            
+            break ;
+        }
+        // write(1,"a",1);
     }
 }
 

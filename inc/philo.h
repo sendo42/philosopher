@@ -44,7 +44,7 @@ typedef struct s_pman
 t_info *set_starttime(t_info *info);
 t_info *store_rule (t_info *info, char **av);
 long now_time(t_info *info);
-void wait_tid(t_pman *pmans, int num);
+void wait_tid(t_pman *pmans);
 long get_current_time();
 void    ft_msleep(long time);
 void observe(t_pman *pmans);

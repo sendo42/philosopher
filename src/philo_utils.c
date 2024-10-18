@@ -36,12 +36,12 @@ long now_time(t_info *info)
     return time;
 }
 
-void wait_tid(t_pman *pmans, int num)
+void wait_tid(t_pman *pmans)
 {
     int i;
 
     i = 0;
-    while(i < num)
+    while(i < pmans->info->num_philo)
     {
         pthread_join(pmans[i].tid ,NULL);
         i++;
