@@ -44,14 +44,6 @@ is_hold_die
 
 */
 
-void *lonely_stop(t_pman *pman)
-{
-    p_think(pman);
-    printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
-    ft_msleep(pman->info->time_to_die);
-    
-    return NULL;
-}
 
 bool is_hold_die(int time_to_die, long last_eattime)
 {
@@ -63,10 +55,16 @@ bool is_hold_die(int time_to_die, long last_eattime)
 
 bool is_died(t_pman *pman)
 {
+    pthread_mutex_lock(&pman->last_time);
     if(pman->info->time_to_die < get_current_time() - pman->last_eattime)
+    {
+        pthread_mutex_unlock(&pman->last_time);
         return true;
-    else
+    }
+    else {
+        pthread_mutex_unlock(&pman->last_time);
         return false;
+    }
 }
 
 bool is_full_eat(t_pman *pman)
@@ -78,28 +76,6 @@ bool is_full_eat(t_pman *pman)
         return false;
 }
 
-bool is_full_alleat(t_pman *pman)
-{
-    int i;
-
-    i = 0;
-    while(i < pman->info->num_philo)
-    {
-        pman[i].info->is_full = is_full_eat(&pman[i]);
-        // printf("is_full %i\n",pman[i].info->is_full);
-        // printf("is_full %i\n",is_full_eat(&pman[i]));
-        if(pman[i].info->is_full == true)
-        {
-            // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
-            // printf("now_time = %li\n", get_current_time());
-            // printf("time_to die %i, now time is %li\n",pman->info->time_to_die, get_current_time() - pman[i].last_eattime);
-            // printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
-            break ;
-        }
-        i++;
-    }
-    return true;    
-}
 
 bool is_anyone_dead(t_pman *pman)
 {
@@ -108,6 +84,7 @@ bool is_anyone_dead(t_pman *pman)
     i = 0;
     while(i < pman->info->num_philo)
     {
+        pthread_mutex_lock(&pman->info->dead);
         pman->info->is_dead = is_died(&pman[i]);
         if(pman->info->is_dead == true)
         {
@@ -115,8 +92,10 @@ bool is_anyone_dead(t_pman *pman)
             // printf("now_time = %li\n", get_current_time());
             // printf("time_to die %i, now time is %li\n",pman->info->time_to_die, get_current_time() - pman[i].last_eattime);
             printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
+            pthread_mutex_unlock(&pman->info->dead);
             break ;
         }
+        pthread_mutex_unlock(&pman->info->dead);
         i++;
     }
     return pman->info->is_dead;
@@ -130,7 +109,7 @@ void monitor_end(t_pman *pman)
         {
             break;
         }
-        if(is_full_eat(pman) == true)
+        if(pman->info->num_must_eat > 0 && is_full_eat(pman) == true)
         {
             pman->info->is_full = true;
             break ;
@@ -145,6 +124,28 @@ void monitor_end(t_pman *pman)
     }
 }
 
+// bool is_full_alleat(t_pman *pman)
+// {
+//     int i;
+
+//     i = 0;
+//     while(i < pman->info->num_philo)
+//     {
+//         pman[i].info->is_full = is_full_eat(&pman[i]);
+//         // printf("is_full %i\n",pman[i].info->is_full);
+//         // printf("is_full %i\n",is_full_eat(&pman[i]));
+//         if(pman[i].info->is_full == true)
+//         {
+//             // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
+//             // printf("now_time = %li\n", get_current_time());
+//             // printf("time_to die %i, now time is %li\n",pman->info->time_to_die, get_current_time() - pman[i].last_eattime);
+//             // printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
+//             break ;
+//         }
+//         i++;
+//     }
+//     return true;    
+// }
 
 
 // void set_all_died(t_pman *pman)

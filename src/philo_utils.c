@@ -6,7 +6,8 @@ t_info *store_rule (t_info *info, char **av)
     info->time_to_die = atoi(av[2]);
     info->time_to_eat = atoi(av[3]);
     info->time_to_sleep = atoi(av[4]);
-    info->num_must_eat = atoi(av[5]);
+    if(info->num_philo == 6)
+        info->num_must_eat = atoi(av[5]);
     return info;
 }
 

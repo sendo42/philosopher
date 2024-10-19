@@ -20,6 +20,7 @@ typedef struct s_info
     bool is_dead;
     bool is_full;
 
+    pthread_mutex_t dead;
     pthread_mutex_t *pfork;
     pthread_mutex_t print;
 } t_info;
@@ -35,6 +36,8 @@ typedef struct s_pman
     long last_eattime;
     int count_eat;
     bool is_fulleat;
+
+    pthread_mutex_t last_time;
 } t_pman;
 
 // pfork[rfork]
@@ -59,6 +62,35 @@ void *lonely_stop(t_pman *pman);
 void p_think(t_pman *pman);
 
 
+bool check_input(int ac, char **av);
+
+// main.c
+void *dining_algo(void *args);
+
+// observe.c
+
+bool is_hold_die(int time_to_die, long last_eattime);
+bool is_died(t_pman *pman);
+bool is_full_eat(t_pman *pman);
+bool is_anyone_dead(t_pman *pman);
+void monitor_end(t_pman *pman);
+
+// philo_action.c
+void take_fork(t_pman *pman);
+void p_eat(t_pman *pman);
+void p_think(t_pman *pman);
+void p_sleep(t_pman *pman);
+
+
+
+// philo_init.c
+t_pman *start_pmans(t_pman *pmans, char **av);
+t_pman *pman_setrule (char **av);
+t_pman *pman_init(char **av);
+
+
+
+// check_input.c
 bool check_input(int ac, char **av);
 
 
