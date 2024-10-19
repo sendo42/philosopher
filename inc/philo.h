@@ -93,6 +93,10 @@ t_pman *pman_init(char **av);
 // check_input.c
 bool check_input(int ac, char **av);
 
+// philo_utils.c
+void    print_message(const char *msg, t_pman *pman);
+
+
 
 //共有してるのはinfo
 /*

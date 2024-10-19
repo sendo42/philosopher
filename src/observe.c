@@ -88,14 +88,14 @@ bool is_anyone_dead(t_pman *pman)
         pman->info->is_dead = is_died(&pman[i]);
         if(pman->info->is_dead == true)
         {
-            // printf("philo %i last_eattime = %li\n",pman[i].philo_id, pman[i].last_eattime);
-            // printf("now_time = %li\n", get_current_time());
-            // printf("time_to die %i, now time is %li\n",pman->info->time_to_die, get_current_time() - pman[i].last_eattime);
-            printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
             pthread_mutex_unlock(&pman->info->dead);
+            pthread_mutex_lock(&pman->info->print);
+            printf("\x1b[31m%li %i died\n",now_time(pman->info),i);
+            pthread_mutex_unlock(&pman->info->print);
             break ;
         }
-        pthread_mutex_unlock(&pman->info->dead);
+        else
+            pthread_mutex_unlock(&pman->info->dead);        
         i++;
     }
     return pman->info->is_dead;

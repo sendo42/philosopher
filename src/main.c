@@ -33,7 +33,7 @@ void *dining_algo(void *args)
         return lonely_stop(pman);
     if((pman->philo_id + 1) % 2 == 0)
     {
-        usleep(300);//これ10とかだと全然入れ替わって死ぬ
+        usleep(pman->info->time_to_eat / 2);//これ10とかだと全然入れ替わって死ぬ
         // printf("I am %i\n",pman->philo_id);x
     }
     while(1)

@@ -60,11 +60,11 @@ t_pman *pman_init(char **av)
     while(i < pmans->info->num_philo)
     {
         pthread_mutex_init(&pmans->info->pfork[i], NULL);
+        pthread_mutex_init(&pmans[i].last_time, NULL);
         i++;
     }
     pthread_mutex_init(&pmans->info->print, NULL);
     pthread_mutex_init(&pmans->info->dead, NULL);
-    pthread_mutex_init(&pmans->last_time, NULL);
 
     return pmans;
 }

@@ -1,5 +1,16 @@
 #include "philo.h"
 
+void    print_message(const char *msg, t_pman *pman)
+{
+    pthread_mutex_lock(&pman->info->print);
+    pthread_mutex_lock(&pman->info->dead);
+    if (pman->info->is_dead == false)
+        printf("%ld %d %s\n", now_time(pman->info),
+            pman->philo_id, msg);
+    pthread_mutex_unlock(&pman->info->dead);
+    pthread_mutex_unlock(&pman->info->print);
+}
+
 t_info *store_rule (t_info *info, char **av)
 {
     info->num_philo = atoi(av[1]);
