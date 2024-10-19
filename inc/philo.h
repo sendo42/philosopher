@@ -4,6 +4,8 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <limits.h>
+
 
 typedef struct s_info
 {
@@ -55,6 +57,10 @@ bool is_full_eat(t_pman *pman);
 bool is_died(t_pman *pman);
 void *lonely_stop(t_pman *pman);
 void p_think(t_pman *pman);
+
+
+bool check_input(int ac, char **av);
+
 
 //共有してるのはinfo
 /*

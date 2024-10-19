@@ -2,7 +2,7 @@ PROGRAM := philo
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-DEBUGFLAGS = -g -fsanitize=thread
+DEBUGFLAGS = -g -fsanitize=address
 
 INCDIR = inc
 SRCDIR = src

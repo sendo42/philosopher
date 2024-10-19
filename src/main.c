@@ -3,7 +3,6 @@
 void take_fork(t_pman *pman)
 {
     // printf("philo_id %i rfork %i lfork %i last eattime %li\n",pman->philo_id, pman->rfork,pman->lfork,get_current_time() - pman->last_eattime);
-    // pthread_mutex_lock(&pman->info->print);
     pthread_mutex_lock(&pman->info->pfork[pman->rfork]);
     if(pman->info->is_dead == true)
     {
@@ -23,10 +22,11 @@ void take_fork(t_pman *pman)
     }
     else
     {
+    pthread_mutex_lock(&pman->info->print);
         printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
         printf("%li %i is eating\n",now_time(pman->info),pman->philo_id);
+    pthread_mutex_unlock(&pman->info->print);
     }
-    // pthread_mutex_unlock(&pman->info->print);
     ft_msleep(pman->info->time_to_eat);
     pthread_mutex_unlock(&pman->info->pfork[pman->lfork]);
     pthread_mutex_unlock(&pman->info->pfork[pman->rfork]);
@@ -93,7 +93,7 @@ void *dining_algo(void *args)
     if((pman->philo_id + 1) % 2 == 0)
     {
         usleep(300);//これ10とかだと全然入れ替わって死ぬ
-        // printf("I am %i\n",pman->philo_id);
+        // printf("I am %i\n",pman->philo_id);x
     }
     while(1)
     {
@@ -188,15 +188,14 @@ int main(int ac, char **av)
 {
     t_pman *pmans;
 
-    if(ac == 6)
+    if(check_input(ac, av) == true)
     {
         pmans = pman_init(av);
         pmans = start_pmans(pmans, av);
-
+    }
     //joinfree;//スレッドの終わりを待ち、解放
 
 
-    }
 }
 
 
