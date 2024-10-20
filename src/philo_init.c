@@ -23,6 +23,7 @@ t_pman *start_pmans(t_pman *pmans, char **av)
     }
     monitor_end(pmans);
     wait_tid(pmans);
+    free_pmans(pmans, num);
     return pmans;
 }
 

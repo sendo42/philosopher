@@ -32,48 +32,26 @@ void *dining_algo(void *args)
     if(pman->info->num_philo == 1)
         return lonely_stop(pman);
     if((pman->philo_id + 1) % 2 == 0)
-    {
         usleep(500);
-        // usleep(pman->info->time_to_eat / 2);//これ10とかだと全然入れ替わって死ぬ
-        // printf("I am %i\n",pman->philo_id);x
-    }
     while(1)
     {
         p_think(pman);
         pthread_mutex_lock(&pman->info->dead);
         if(pman->info->is_dead == true || pman->info->is_full == true)
-        {
-            // printf("pman->is_dead = %i\n",pman->info->is_dead);
-            // printf("pman is fulleat = %i\n",pman->info->is_full);
-            // printf("count eat = %i \n",pman->count_eat);
-            pthread_mutex_unlock(&pman->info->dead);
             break;
-        }
         pthread_mutex_unlock(&pman->info->dead);
         p_eat(pman);
         pthread_mutex_lock(&pman->info->dead);
         if(pman->info->is_dead == true || pman->info->is_full == true)
-        {
-            // printf("pman->is_dead = %i\n",pman->info->is_dead);
-            // printf("pman is fulleat = %i\n",pman->info->is_full);
-            // printf("count eat = %i \n",pman->count_eat);
-            pthread_mutex_unlock(&pman->info->dead);
             break;
-        }
         pthread_mutex_unlock(&pman->info->dead);
         p_sleep(pman);
         pthread_mutex_lock(&pman->info->dead);
         if(pman->info->is_dead == true || pman->info->is_full == true)
-        {
-            // printf("pman->is_dead =%i\n",pman->info->is_dead);
-            // printf("pman is fulleat = %i\n",pman->info->is_full);
-            // printf("count eat = %i \n",pman->count_eat);
-                pthread_mutex_unlock(&pman->info->dead);
             break;
-        }
         pthread_mutex_unlock(&pman->info->dead);
-
     }
+    pthread_mutex_unlock(&pman->info->dead);
     return NULL;
 }
 
@@ -91,3 +69,9 @@ int main(int ac, char **av)
 
 
 }
+
+
+// __attribute__((destructor))
+// static void destructor() {
+// 	system("leaks -q philo");
+// }

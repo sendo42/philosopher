@@ -1,0 +1,31 @@
+Target process is an ancestor and permitting live process for ancestors so not generating a corpse to save resources by default.
+Can't examine target process's malloc zone asan_0x103a8e9d8, so memory analysis will be incomplete or incorrect.
+Reason: for security, cannot load non-system library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
+
+Process 46857 is not debuggable. Due to security restrictions, leaks can only show or save contents of readonly memory of restricted processes.
+
+Process:         philo [46857]
+Path:            /Users/USER/*/philo
+Load Address:    0x102764000
+Identifier:      philo
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  zsh [4397]
+
+Date/Time:       2024-10-20 15:46:53.494 +0900
+Launch Time:     2024-10-20 15:46:51.996 +0900
+OS Version:      macOS 14.3 (23D56)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 15.3 (15E204a)
+
+Physical footprint:         36.2M
+Physical footprint (peak):  44.2M
+Idle exit:                  untracked
+----
+
+leaks Report Version: 4.0
+Process 46857: 1 nodes malloced for 0 KB
+Process 46857: 0 leaks for 0 total leaked bytes.
+

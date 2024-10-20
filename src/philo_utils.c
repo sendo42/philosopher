@@ -68,6 +68,23 @@ void wait_tid(t_pman *pmans)
     }
 }
 
+void free_pmans(t_pman *pmans, int num)
+{
+    // int i;
+
+    // i = 0;
+    num = num + 1;
+    free(pmans->info->pfork);
+    free(pmans->info);
+    free(pmans);
+    // while(i < num)
+    // {
+    //     free(&pmans[i]);
+    //     i++;
+    // }
+
+}
+
 // void myprintf(t_info *info,int philo_id, bool is_dead, char *str)
 // {
 //     if(is_dead != true)
