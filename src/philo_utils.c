@@ -1,5 +1,12 @@
 #include "philo.h"
 
+void printable(t_pman *pman)
+{
+    pthread_mutex_lock(&pman->info->print);
+    printf("%li %i has taken a fork\n",now_time(pman->info),pman->philo_id);
+    pthread_mutex_unlock(&pman->info->print);
+}
+
 void    print_message(const char *msg, t_pman *pman)
 {
     pthread_mutex_lock(&pman->info->print);
@@ -11,14 +18,15 @@ void    print_message(const char *msg, t_pman *pman)
     pthread_mutex_unlock(&pman->info->print);
 }
 
-t_info *store_rule (t_info *info, char **av)
+t_info *store_rule (t_info *info, int ac, char **av)
 {
     info->num_philo = atoi(av[1]);
     info->time_to_die = atoi(av[2]);
     info->time_to_eat = atoi(av[3]);
     info->time_to_sleep = atoi(av[4]);
-    if(info->num_philo == 6)
+    if(ac == 6)
         info->num_must_eat = atoi(av[5]);
+    // printf("num_must_eat %i\n",info->num_must_eat);
     return info;
 }
 

@@ -47,7 +47,7 @@ typedef struct s_pman
 
 //前処理
 t_info *set_starttime(t_info *info);
-t_info *store_rule (t_info *info, char **av);
+t_info *store_rule (t_info *info, int ac, char **av);
 long now_time(t_info *info);
 void wait_tid(t_pman *pmans);
 long get_current_time();
@@ -85,8 +85,8 @@ void p_sleep(t_pman *pman);
 
 // philo_init.c
 t_pman *start_pmans(t_pman *pmans, char **av);
-t_pman *pman_setrule (char **av);
-t_pman *pman_init(char **av);
+t_pman *pman_setrule (int ac, char **av);
+t_pman *pman_init(int ac, char **av);
 
 
 
@@ -95,6 +95,7 @@ bool check_input(int ac, char **av);
 
 // philo_utils.c
 void    print_message(const char *msg, t_pman *pman);
+void printable(t_pman *pman);
 
 
 

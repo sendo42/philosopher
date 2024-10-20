@@ -96,7 +96,7 @@ bool check_input(int ac, char **av)
 		printf("too few or many args %i %s\n",ac, av[1]);
 		return false;
 	}
-	printf("%i %i %i %i %i \n",ft_advanced_atoi(av[1]),ft_advanced_atoi(av[2]),ft_advanced_atoi(av[3]),ft_advanced_atoi(av[4]),ft_advanced_atoi(av[4]));
+	// printf("%i %i %i %i %i \n",ft_advanced_atoi(av[1]),ft_advanced_atoi(av[2]),ft_advanced_atoi(av[3]),ft_advanced_atoi(av[4]),ft_advanced_atoi(av[4]));
     if(ft_advanced_atoi(av[1]) > 200 || ft_advanced_atoi(av[1]) <= 0 || has_char(av[1]) == true)
         return false;
     if(has_char(av[2]) == true || ft_advanced_atoi(av[2]) <= 0)
@@ -110,6 +110,7 @@ bool check_input(int ac, char **av)
 		if(has_char(av[5]) == true || ft_advanced_atoi(av[5]) <= 0)
         	return false;
 	}
+	printf("ac %i num_must_eat %i\n",ac,ft_advanced_atoi(av[5]));
     return true;
 }
 

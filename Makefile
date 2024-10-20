@@ -1,7 +1,7 @@
 PROGRAM := philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 INCDIR = inc
 SRCDIR = src

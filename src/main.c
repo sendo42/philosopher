@@ -33,7 +33,8 @@ void *dining_algo(void *args)
         return lonely_stop(pman);
     if((pman->philo_id + 1) % 2 == 0)
     {
-        usleep(pman->info->time_to_eat / 2);//これ10とかだと全然入れ替わって死ぬ
+        usleep(500);
+        // usleep(pman->info->time_to_eat / 2);//これ10とかだと全然入れ替わって死ぬ
         // printf("I am %i\n",pman->philo_id);x
     }
     while(1)
@@ -83,7 +84,7 @@ int main(int ac, char **av)
 
     if(check_input(ac, av) == true)
     {
-        pmans = pman_init(av);
+        pmans = pman_init(ac, av);
         pmans = start_pmans(pmans, av);
     }
     //joinfree;//スレッドの終わりを待ち、解放

@@ -51,6 +51,7 @@ void p_eat(t_pman *pman)
 void p_think(t_pman *pman)
 {        
     pthread_mutex_lock(&pman->info->dead);
+    // pthread_mutex_lock(&pman->info->print);
     if(pman->info->is_dead == 0)
     {
         pthread_mutex_unlock(&pman->info->dead);
@@ -60,6 +61,7 @@ void p_think(t_pman *pman)
     }
     else
     {
+        // pthread_mutex_unlock(&pman->info->print);
         pthread_mutex_unlock(&pman->info->dead);
         return ;
     }

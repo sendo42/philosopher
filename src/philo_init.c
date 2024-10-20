@@ -26,7 +26,7 @@ t_pman *start_pmans(t_pman *pmans, char **av)
     return pmans;
 }
 
-t_pman *pman_setrule (char **av)
+t_pman *pman_setrule (int ac, char **av)
 {
     int num;
     t_pman *pmans;
@@ -38,7 +38,7 @@ t_pman *pman_setrule (char **av)
     pmans = malloc(sizeof(t_pman) * num);
     info = malloc(sizeof(t_info));
     info->pfork = malloc(sizeof(pthread_mutex_t) * num);
-    info = store_rule(info, av);
+    info = store_rule(info, ac, av);
     info = set_starttime(info);
     
     while (i < num)
@@ -50,13 +50,13 @@ t_pman *pman_setrule (char **av)
     return pmans;
 }
 
-t_pman *pman_init(char **av)
+t_pman *pman_init(int ac, char **av)
 {
     t_pman *pmans;
     int i;
 
     i = 0;
-    pmans = pman_setrule(av);
+    pmans = pman_setrule(ac, av);
     while(i < pmans->info->num_philo)
     {
         pthread_mutex_init(&pmans->info->pfork[i], NULL);
